@@ -1,0 +1,23 @@
+{
+  "name": "make-sass-lint-config",
+  "version": "0.0.1",
+  "description": "Convert your .scss-lint.yml config file into the equivalent .sass-lint.yml",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benthemonkey/make-sass-lint-config.git"
+  },
+  "author": "Ben Rothman <bensrothman@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benthemonkey/make-sass-lint-config/issues"
+  },
+  "homepage": "https://github.com/benthemonkey/make-sass-lint-config#readme",
+  "dependencies": {
+    "js-yaml": "^3.4.2",
+    "lodash": "^3.10.1"
+  },
+  "devDependencies": {
+    "eslint": "^1.6.0"
+  }
+}
