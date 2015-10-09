@@ -1,0 +1,43 @@
+body {
+  margin: 30px;
+  padding: 0;
+  font-family: verdana, sans-serif;
+}
+h1 {
+  font-size: 40px;
+  margin: 40px 0 30px;
+  color: #aaa;
+}
+h5 {
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 30px;
+  margin: 0;
+  font-style: italic;
+}
+.src {
+  width: 49%;
+  float: left;
+}
+.dst {
+  width: 49%;
+  float: right;
+}
+
+.src .CodeMirror {
+  background-color: #fffffb;
+  border: 1px solid #888;
+  border-radius: 3px;
+  box-shadow: 0 0 3px #ccc inset;
+}
+
+.dst .CodeMirror {
+  background-color: #F8F8F8;
+  border: 1px solid #eee;
+  border-radius: 3px;
+}
+
+.CodeMirror-scroll {
+  height: 500px;
+  line-height: 1.2;
+}

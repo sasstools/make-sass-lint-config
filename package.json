@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Convert your .scss-lint.yml config file into the equivalent .sass-lint.yml",
   "main": "index.js",
+  "scripts": {
+    "build": "./node_modules/browserify/bin/cmd.js index.js -o convert.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/benthemonkey/make-sass-lint-config.git"
@@ -14,8 +17,7 @@
   },
   "homepage": "https://github.com/benthemonkey/make-sass-lint-config#readme",
   "dependencies": {
-    "js-yaml": "^3.4.2",
-    "lodash": "^3.10.1"
+    "browserify": "^11.2.0"
   },
   "devDependencies": {
     "eslint": "^1.6.0"

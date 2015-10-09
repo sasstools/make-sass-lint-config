@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.7.0/codemirror.min.css">
+    <link rel="stylesheet" href="convert.css">
+</head>
+<body>
+    <h1>Convert your SCSS-Lint Config File to Sass-Lint</h1>
+    <div class='src'>
+        <h5>Paste contents of .scss-lint.yml here (YAML):</h5>
+        <textarea id="source"></textarea>
+    </div>
+    <div class='dst'>
+        <h5>Result (YAML):</h5>
+        <textarea id="result"></textarea>
+    </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.7.0/codemirror.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.7.0/mode/yaml/yaml.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.4.2/js-yaml.min.js"></script>
+    <script type="text/javascript" src="convert.js"></script>
+</body>
+</html>
