@@ -1,4 +1,10 @@
-// TODO: BangFormat
+module.exports.BangFormat = {
+  special_case: function (linterValue, sassSettings) {
+    sassSettings.rules['space-before-bang'] = [1, { include: linterValue.space_before_bang !== false }];
+    sassSettings.rules['space-after-bang'] = [1, { include: linterValue.space_after_bang || false }];
+  }
+};
+
 module.exports.BorderZero = {
   name: 'border-zero',
   options: {
@@ -12,9 +18,26 @@ module.exports.ColorKeyword = { name: 'no-color-keyword' };
 module.exports.ColorVariable = { name: 'no-color-literals' };
 module.exports.Comment = { name: 'no-css-comments' };
 module.exports.DebugStatement = { name: 'no-debug' };
-// TODO DeclarationOrder
+
+module.exports.DeclarationOrder = {
+  special_case: function (linterValue, sassSettings) {
+    sassSettings.rules['extends-before-declarations'] = 1;
+    sassSettings.rules['extends-before-mixins'] = 1;
+    sassSettings.rules['mixins-before-declarations'] = 1;
+  }
+};
+
 module.exports.DuplicateProperty = { name: 'no-duplicate-properties' };
-module.exports.EmptyLineBetweenBlocks = { name: 'empty-line-between-blocks' };
+
+module.exports.EmptyLineBetweenBlocks = {
+  name: 'empty-line-between-blocks',
+  options: {
+    ignore_single_line_blocks: {
+      name: 'ignore-single-line-rulesets'
+    }
+  }
+};
+
 module.exports.EmptyRule = { name: 'no-empty-rulesets' };
 module.exports.ExtendDirective = { name: 'no-extends' };
 
@@ -83,9 +106,66 @@ module.exports.LeadingZero = {
   }
 };
 
-module.exports.MergeableSelector = { name: 'no-mergeable-selectors' };
+module.exports.MergeableSelector = {
+  special_case: function (linterValue, sassSettings) {
+    sassSettings.rules['no-mergeable-selectors'] = 1;
 
-// TODO: NameFormat
+    if (linterValue.force_nesting) {
+      sassSettings.rules['force-pseudo-nesting'] = 1;
+      sassSettings.rules['force-attribute-nesting'] = 1;
+      sassSettings.rules['force-element-nesting'] = 1;
+    }
+  }
+};
+
+module.exports.NameFormat = {
+  special_case: function (linterValue, sassSettings) {
+    var i, name,
+        allowLeadingUnderscore = linterValue.allow_leading_underscore !== false,
+        types = ['function', 'mixin', 'placeholder', 'variable'],
+        translateConvention = function (_convention) {
+          if (_convention instanceof RegExp) {
+            return _convention;
+          }
+          else if (typeof _convention === 'undefined' || _convention === 'hyphenated_lowercase') {
+            return 'hyphenatedlowercase';
+          }
+          else if (_convention === 'snake_case') {
+            return 'snakecase';
+          }
+          else if (_convention === 'camel_case') {
+            return 'camelcase';
+          }
+          else {
+            return 'ERROR_INVALID_CONVENTION';
+          }
+        };
+
+    for (i = 0; i < types.length; i++) {
+      name = types[i];
+
+      // set default
+      sassSettings.rules[name + '-name-format'] = [
+        1,
+        {
+          'allow-leading-underscore': allowLeadingUnderscore,
+          convention: translateConvention(linterValue.convention)
+        }
+      ];
+
+      if (linterValue[name + '_convention']) {
+        sassSettings.rules[name + '-name-format'][1].convention = translateConvention(linterValue[name + '_convention']);
+      }
+
+      if (linterValue[name + '_convention_explanation']) {
+        sassSettings.rules[name + '-name-format'][1]['convention-explanation'] = linterValue[name + '_convention_explanation'];
+      }
+      else if (linterValue.convention_explanation) {
+        sassSettings.rules[name + '-name-format'][1]['convention-explanation'] = linterValue.convention_explanation;
+      }
+    }
+  }
+};
 
 module.exports.NestingDepth = {
   name: 'nesting-depth',
