@@ -5,7 +5,7 @@ Convert your .scss-lint.yml config file into the equivalent .sass-lint.yml
 Use the online converter
 ---
 
-The easiest way to use this tool is to simply paste the contents of your `.scss-lint.yml` file into the demonstration converter at sasstools.github.io/make-sass-lint-config/.
+The easiest way to use this tool is to simply paste the contents of your `.scss-lint.yml` file into the demonstration converter at [sasstools.github.io/make-sass-lint-config](http://sasstools.github.io/make-sass-lint-config/).
 
 Programmatic Usage
 ---
