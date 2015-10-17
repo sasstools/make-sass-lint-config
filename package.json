@@ -4,22 +4,26 @@
   "description": "Convert your .scss-lint.yml config file into the equivalent .sass-lint.yml",
   "main": "index.js",
   "scripts": {
-    "build": "./node_modules/browserify/bin/cmd.js index.js -o convert.js"
+    "build": "./node_modules/browserify/bin/cmd.js index.js -o convert.js",
+    "pretest": "eslint .",
+    "test": "mocha tests"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/benthemonkey/make-sass-lint-config.git"
+    "url": "git+https://github.com/sasstools/make-sass-lint-config.git"
   },
   "author": "Ben Rothman <bensrothman@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/benthemonkey/make-sass-lint-config/issues"
+    "url": "https://github.com/sasstools/make-sass-lint-config/issues"
   },
-  "homepage": "https://github.com/benthemonkey/make-sass-lint-config#readme",
+  "homepage": "http://sasstools.github.io/make-sass-lint-config/",
   "dependencies": {
-    "browserify": "^11.2.0"
+    "js-yaml": "^3.4.3"
   },
   "devDependencies": {
-    "eslint": "^1.6.0"
+    "browserify": "^11.2.0",
+    "eslint": "^1.6.0",
+    "mocha": "^2.3.3"
   }
 }
