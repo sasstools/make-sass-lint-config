@@ -1,4 +1,5 @@
 #!/bin/sh
 
 npm i browserify make-sass-lint-config
-browserify index.js > convert.js
+./node_modules/browserify/bin/cmd.js index.js > convert.js
+
