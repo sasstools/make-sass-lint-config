@@ -10,9 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sasstools/make-sass-lint-config.git"
+    "url": "https://github.com/sasstools/make-sass-lint-config.git"
   },
-  "author": "Ben Rothman <bensrothman@gmail.com>",
+  "keywords": [
+    "Sass",
+    "SCSS",
+    "lint",
+    "config"
+  ],
+  "author": "Ben Rothman",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sasstools/make-sass-lint-config/issues"
