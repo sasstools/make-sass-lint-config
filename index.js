@@ -26,6 +26,31 @@ var headerTemplate = function (header) {
 };
 
 /**
+ * Finds the severity level of a linter
+ * @param   {string} linterName  - Name of the linter
+ * @param   {Object} linterValue - Settings for a linter
+ * @returns {bool}               - severity level of linter
+ */
+var getSeverity = function (linterName, linterValue) {
+  var hasEnabled = linterValue.hasOwnProperty('enabled'),
+      hasSeverity = linterValue.hasOwnProperty('severity');
+
+  // special case for linters that are disabled by default:
+  if (translations[linterName] && translations[linterName].defaultDisabled && !hasEnabled) {
+    return 0;
+  }
+  else if (hasEnabled && linterValue.enabled === false) {
+    return 0;
+  }
+  else if (hasSeverity && linterValue.severity === 'error') {
+    return 2;
+  }
+  else {
+    return 1;
+  }
+};
+
+/**
  * Converts a scss-lint config file into a sass-lint config file
  * @param {Object} scssSettings  - Settings parsed from YAML
  * @param {Object} options       - options
@@ -51,16 +76,14 @@ var convert = function (scssSettings, options) {
   }
 
   Object.keys(scssSettings.linters).forEach(function (linterName) {
-    var severity,
-        linterValue = scssSettings.linters[linterName],
+    var linterValue = scssSettings.linters[linterName],
+        severity = getSeverity(linterName, linterValue),
         translatedOptions = {},
         translation = translations[linterName];
 
     // handle special cases where one scss-lint rule converts to multiple sass-lint rules
     if (translation && translation.special_case) {
-      if (linterValue.enabled) {
-        translation.special_case(linterValue, sassSettings);
-      }
+      translation.special_case(linterValue, sassSettings, severity);
     }
     else if (translation) {
       // go through set of options associated with the scss-lint rule and translate
@@ -69,8 +92,7 @@ var convert = function (scssSettings, options) {
         var optionValue = linterValue[optionName],
             optionTranslation = translation.options ? translation.options[optionName] : false;
 
-        if (optionName === 'enabled') {
-          severity = optionValue ? 1 : 0;
+        if (optionName === 'enabled' || optionName === 'severity') {
           return;
         }
 

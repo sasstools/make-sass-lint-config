@@ -2,8 +2,200 @@
 var assert = require('assert');
 var scss2sass = require('../index');
 
-describe('Translate rule', function () {
+describe('Rule Conversion', function () {
+  describe('Handling "enabled" and "severity"', function () {
+    it('rule enabled by default with neither "enabled" nor "severity"', function () {
+      assert.deepStrictEqual(
+        scss2sass.convert({
+          linters: {
+            'BorderZero': { convention: 'none' }
+          }
+        }).rules,
+        { 'border-zero': [1, { convention: 'none' }] }
+      );
+    });
+
+    it('rule enabled by default with "enabled" but not "severity"', function () {
+      assert.deepStrictEqual(
+        scss2sass.convert({
+          linters: {
+            'BorderZero': { enabled: true, convention: 'none' }
+          }
+        }).rules,
+        { 'border-zero': [1, { convention: 'none' }] }
+      );
+
+      assert.deepStrictEqual(
+        scss2sass.convert({
+          linters: {
+            'BorderZero': { enabled: false, convention: 'none' }
+          }
+        }).rules,
+        { 'border-zero': [0, { convention: 'none' }] }
+      );
+    });
+
+    it('rule enabled by default with "severity" but not "enabled"', function () {
+      assert.deepStrictEqual(
+        scss2sass.convert({
+          linters: {
+            'BorderZero': { severity: 'warning', convention: 'none' }
+          }
+        }).rules,
+        { 'border-zero': [1, { convention: 'none' }] }
+      );
+
+      assert.deepStrictEqual(
+        scss2sass.convert({
+          linters: {
+            'BorderZero': { severity: 'error', convention: 'none' }
+          }
+        }).rules,
+        { 'border-zero': [2, { convention: 'none' }] }
+      );
+    });
+
+    it('rule enabled by default with "enabled" and "severity"', function () {
+      assert.deepStrictEqual(
+        scss2sass.convert({
+          linters: {
+            'BorderZero': { enabled: true, severity: 'warning', convention: 'none' }
+          }
+        }).rules,
+        { 'border-zero': [1, { convention: 'none' }] }
+      );
+
+      assert.deepStrictEqual(
+        scss2sass.convert({
+          linters: {
+            'BorderZero': { enabled: false, severity: 'warning', convention: 'none' }
+          }
+        }).rules,
+        { 'border-zero': [0, { convention: 'none' }] }
+      );
+
+      assert.deepStrictEqual(
+        scss2sass.convert({
+          linters: {
+            'BorderZero': { enabled: true, severity: 'error', convention: 'none' }
+          }
+        }).rules,
+        { 'border-zero': [2, { convention: 'none' }] }
+      );
+
+      assert.deepStrictEqual(
+        scss2sass.convert({
+          linters: {
+            'BorderZero': { enabled: false, severity: 'error', convention: 'none' }
+          }
+        }).rules,
+        { 'border-zero': [0, { convention: 'none' }] }
+      );
+    });
+
+    it('rule disabled by default with neither "enabled" nor "severity"', function () {
+      assert.deepStrictEqual(
+        scss2sass.convert({
+          linters: {
+            'VariableForProperty': { properties: ['font-family'] }
+          }
+        }).rules,
+        { 'variable-for-property': [0, { properties: ['font-family'] }] }
+      );
+    });
+
+    it('rule disabled by default with "enabled" but not "severity"', function () {
+      assert.deepStrictEqual(
+        scss2sass.convert({
+          linters: {
+            'VariableForProperty': { enabled: true, properties: ['font-family'] }
+          }
+        }).rules,
+        { 'variable-for-property': [1, { properties: ['font-family'] }] }
+      );
+
+      assert.deepStrictEqual(
+        scss2sass.convert({
+          linters: {
+            'VariableForProperty': { enabled: false, properties: ['font-family'] }
+          }
+        }).rules,
+        { 'variable-for-property': [0, { properties: ['font-family'] }] }
+      );
+    });
+
+    it('rule disabled by default with "severity" but not "enabled"', function () {
+      assert.deepStrictEqual(
+        scss2sass.convert({
+          linters: {
+            'VariableForProperty': { severity: 'warning', properties: ['font-family'] }
+          }
+        }).rules,
+        { 'variable-for-property': [0, { properties: ['font-family'] }] }
+      );
+
+      assert.deepStrictEqual(
+        scss2sass.convert({
+          linters: {
+            'VariableForProperty': { severity: 'error', properties: ['font-family'] }
+          }
+        }).rules,
+        { 'variable-for-property': [0, { properties: ['font-family'] }] }
+      );
+    });
+
+    it('rule disabled by default with "enabled" and "severity"', function () {
+      assert.deepStrictEqual(
+        scss2sass.convert({
+          linters: {
+            'VariableForProperty': { enabled: true, severity: 'warning', properties: ['font-family'] }
+          }
+        }).rules,
+        { 'variable-for-property': [1, { properties: ['font-family'] }] }
+      );
+
+      assert.deepStrictEqual(
+        scss2sass.convert({
+          linters: {
+            'VariableForProperty': { enabled: false, severity: 'warning', properties: ['font-family'] }
+          }
+        }).rules,
+        { 'variable-for-property': [0, { properties: ['font-family'] }] }
+      );
+
+      assert.deepStrictEqual(
+        scss2sass.convert({
+          linters: {
+            'VariableForProperty': { enabled: true, severity: 'error', properties: ['font-family'] }
+          }
+        }).rules,
+        { 'variable-for-property': [2, { properties: ['font-family'] }] }
+      );
+
+      assert.deepStrictEqual(
+        scss2sass.convert({
+          linters: {
+            'VariableForProperty': { enabled: false, severity: 'error', properties: ['font-family'] }
+          }
+        }).rules,
+        { 'variable-for-property': [0, { properties: ['font-family'] }] }
+      );
+    });
+  });
+
   it('BangFormat', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'BangFormat': { enabled: false }
+        }
+      }).rules,
+      {
+        'space-after-bang': 0,
+        'space-before-bang': 0
+      }
+    );
+
     assert.deepStrictEqual(
       scss2sass.convert({
         linters: {
@@ -160,7 +352,7 @@ describe('Translate rule', function () {
           'DeclarationOrder': { enabled: false }
         }
       }).rules,
-      {}
+      { 'extends-before-declarations': 0, 'extends-before-mixins': 0, 'mixins-before-declarations': 0 }
     );
   });
 
@@ -247,6 +439,26 @@ describe('Translate rule', function () {
         }
       }).rules,
       { 'no-important': 1 }
+    );
+  });
+
+  it('NestingDepth', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'NestingDepth': { enabled: true }
+        }
+      }).rules,
+      { 'nesting-depth': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'NestingDepth': { enabled: true, max_depth: 4 }
+        }
+      }).rules,
+      { 'nesting-depth': [1, { 'max-depth': 4 }] }
     );
   });
 

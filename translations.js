@@ -1,7 +1,18 @@
 module.exports.BangFormat = {
-  special_case: function (linterValue, sassSettings) {
-    sassSettings.rules['space-before-bang'] = [1, { include: linterValue.space_before_bang !== false }];
-    sassSettings.rules['space-after-bang'] = [1, { include: linterValue.space_after_bang || false }];
+  special_case: function (linterValue, sassSettings, severity) {
+    if (linterValue.hasOwnProperty('space_before_bang') || severity !== 0) {
+      sassSettings.rules['space-before-bang'] = [severity, { include: linterValue.space_before_bang !== false }];
+    }
+    else {
+      sassSettings.rules['space-before-bang'] = severity;
+    }
+
+    if (linterValue.hasOwnProperty('space_after_bang') || severity !== 0) {
+      sassSettings.rules['space-after-bang'] = [severity, { include: linterValue.space_after_bang || false }];
+    }
+    else {
+      sassSettings.rules['space-after-bang'] = severity;
+    }
   }
 };
 
@@ -20,10 +31,10 @@ module.exports.Comment = { name: 'no-css-comments' };
 module.exports.DebugStatement = { name: 'no-debug' };
 
 module.exports.DeclarationOrder = {
-  special_case: function (linterValue, sassSettings) {
-    sassSettings.rules['extends-before-declarations'] = 1;
-    sassSettings.rules['extends-before-mixins'] = 1;
-    sassSettings.rules['mixins-before-declarations'] = 1;
+  special_case: function (linterValue, sassSettings, severity) {
+    sassSettings.rules['extends-before-declarations'] = severity;
+    sassSettings.rules['extends-before-mixins'] = severity;
+    sassSettings.rules['mixins-before-declarations'] = severity;
   }
 };
 
@@ -39,7 +50,7 @@ module.exports.EmptyLineBetweenBlocks = {
 };
 
 module.exports.EmptyRule = { name: 'no-empty-rulesets' };
-module.exports.ExtendDirective = { name: 'no-extends' };
+module.exports.ExtendDirective = { name: 'no-extends', defaultDisabled: true };
 
 module.exports.FinalNewline = {
   name: 'final-newline',
@@ -107,19 +118,19 @@ module.exports.LeadingZero = {
 };
 
 module.exports.MergeableSelector = {
-  special_case: function (linterValue, sassSettings) {
-    sassSettings.rules['no-mergeable-selectors'] = 1;
+  special_case: function (linterValue, sassSettings, severity) {
+    sassSettings.rules['no-mergeable-selectors'] = severity;
 
     if (linterValue.force_nesting) {
-      sassSettings.rules['force-pseudo-nesting'] = 1;
-      sassSettings.rules['force-attribute-nesting'] = 1;
-      sassSettings.rules['force-element-nesting'] = 1;
+      sassSettings.rules['force-pseudo-nesting'] = severity;
+      sassSettings.rules['force-attribute-nesting'] = severity;
+      sassSettings.rules['force-element-nesting'] = severity;
     }
   }
 };
 
 module.exports.NameFormat = {
-  special_case: function (linterValue, sassSettings) {
+  special_case: function (linterValue, sassSettings, severity) {
     var i, name,
         allowLeadingUnderscore = linterValue.allow_leading_underscore !== false,
         types = ['function', 'mixin', 'placeholder', 'variable'],
@@ -146,7 +157,7 @@ module.exports.NameFormat = {
 
       // set default
       sassSettings.rules[name + '-name-format'] = [
-        1,
+        severity,
         {
           'allow-leading-underscore': allowLeadingUnderscore,
           convention: translateConvention(linterValue.convention)
@@ -301,8 +312,8 @@ module.exports.StringQuotes = {
 };
 
 module.exports.TrailingSemicolon = { name: 'trailing-semicolon' };
-module.exports.TrailingZero = { name: 'no-trailing-zero' };
-module.exports.TransitionAll = { name: 'no-transition-all' };
+module.exports.TrailingZero = { name: 'no-trailing-zero', defaultDisabled: true };
+module.exports.TransitionAll = { name: 'no-transition-all', defaultDisabled: true };
 module.exports.UrlFormat = { name: 'no-url-protocols' };
 module.exports.UrlQuotes = { name: 'url-quotes' };
 
@@ -312,7 +323,8 @@ module.exports.VariableForProperty = {
     properties: {
       name: 'properties'
     }
-  }
+  },
+  defaultDisabled: true
 };
 
 module.exports.VendorPrefix = {
