@@ -8,7 +8,7 @@ var convert = function () {
 document.addEventListener('DOMContentLoaded', function () {
   source = CodeMirror.fromTextArea(document.getElementById('source'), {
     mode: 'yaml',
-    undoDepth: 1,
+    undoDepth: 20,
     lineWrapping: true,
     lineNumbers: true,
     viewportMargin: Infinity
