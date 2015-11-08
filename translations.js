@@ -38,7 +38,14 @@ module.exports.DeclarationOrder = {
   }
 };
 
-module.exports.DuplicateProperty = { name: 'no-duplicate-properties' };
+module.exports.DuplicateProperty = {
+  name: 'no-duplicate-properties',
+  options: {
+    exclude: {
+      name: 'exclude'
+    }
+  }
+};
 
 module.exports.EmptyLineBetweenBlocks = {
   name: 'empty-line-between-blocks',

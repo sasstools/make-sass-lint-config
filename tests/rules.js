@@ -365,6 +365,15 @@ describe('Rule Conversion', function () {
       }).rules,
       { 'no-duplicate-properties': 1 }
     );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'DuplicateProperty': { enabled: true, exclude: ['a', 'b', 'c'] }
+        }
+      }).rules,
+      { 'no-duplicate-properties': [1, { exclude: ['a', 'b', 'c'] }] }
+    );
   });
 
   it('EmptyLineBetweenBlocks', function () {
