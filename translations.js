@@ -1,3 +1,9 @@
+// can be easily swapped out for a more efficient method,
+// but since obj is always small it shouldn't matter
+var cloneDeep = function (obj) {
+  return JSON.parse(JSON.stringify(obj));
+};
+
 module.exports.BangFormat = {
   special_case: function (linterValue, sassSettings, severity) {
     if (linterValue.hasOwnProperty('space_before_bang') || severity !== 0) {
@@ -140,14 +146,14 @@ module.exports.MergeableSelector = {
 
 module.exports.NameFormat = {
   special_case: function (linterValue, sassSettings, severity) {
-    var i, name,
-        allowLeadingUnderscore = linterValue.allow_leading_underscore !== false,
+    var i, name, specificSettings,
+        generalSettings = {},
         types = ['function', 'mixin', 'placeholder', 'variable'],
         translateConvention = function (_convention) {
           if (_convention instanceof RegExp) {
             return _convention;
           }
-          else if (typeof _convention === 'undefined' || _convention === 'hyphenated_lowercase') {
+          else if (_convention === 'hyphenated_lowercase') {
             return 'hyphenatedlowercase';
           }
           else if (_convention === 'snake_case') {
@@ -161,27 +167,35 @@ module.exports.NameFormat = {
           }
         };
 
+    if (linterValue.hasOwnProperty('allow_leading_underscore')) {
+      generalSettings['allow-leading-underscore'] = linterValue.allow_leading_underscore;
+    }
+
+    if (linterValue.hasOwnProperty('convention')) {
+      generalSettings.convention = translateConvention(linterValue.convention);
+    }
+
+    if (linterValue.hasOwnProperty('convention_explanation')) {
+      generalSettings['convention-explanation'] = linterValue.convention_explanation;
+    }
+
     for (i = 0; i < types.length; i++) {
       name = types[i];
-
-      // set default
-      sassSettings.rules[name + '-name-format'] = [
-        severity,
-        {
-          'allow-leading-underscore': allowLeadingUnderscore,
-          convention: translateConvention(linterValue.convention)
-        }
-      ];
+      specificSettings = cloneDeep(generalSettings);
 
       if (linterValue[name + '_convention']) {
-        sassSettings.rules[name + '-name-format'][1].convention = translateConvention(linterValue[name + '_convention']);
+        specificSettings.convention = translateConvention(linterValue[name + '_convention']);
       }
 
       if (linterValue[name + '_convention_explanation']) {
-        sassSettings.rules[name + '-name-format'][1]['convention-explanation'] = linterValue[name + '_convention_explanation'];
+        specificSettings['convention-explanation'] = linterValue[name + '_convention_explanation'];
       }
-      else if (linterValue.convention_explanation) {
-        sassSettings.rules[name + '-name-format'][1]['convention-explanation'] = linterValue.convention_explanation;
+
+      if (Object.keys(specificSettings).length > 0) {
+        sassSettings.rules[name + '-name-format'] = [severity, specificSettings];
+      }
+      else {
+        sassSettings.rules[name + '-name-format'] = severity;
       }
     }
   }
