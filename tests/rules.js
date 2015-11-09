@@ -418,6 +418,93 @@ describe('Rule Conversion', function () {
     );
   });
 
+  it('FinalNewline', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'FinalNewline': { enabled: true }
+        }
+      }).rules,
+      { 'final-newline': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'FinalNewline': { enabled: true, present: true }
+        }
+      }).rules,
+      { 'final-newline': [1, { include: true }] }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'FinalNewline': { enabled: true, present: false }
+        }
+      }).rules,
+      { 'final-newline': [1, { include: false }] }
+    );
+  });
+
+  it('HexLength', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'HexLength': { enabled: true }
+        }
+      }).rules,
+      { 'hex-length': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'HexLength': { enabled: true, style: 'short' }
+        }
+      }).rules,
+      { 'hex-length': [1, { style: 'short' }] }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'HexLength': { enabled: true, style: 'long' }
+        }
+      }).rules,
+      { 'hex-length': [1, { style: 'long' }] }
+    );
+  });
+
+  it('HexNotation', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'HexNotation': { enabled: true }
+        }
+      }).rules,
+      { 'hex-notation': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'HexNotation': { enabled: true, style: 'uppercase' }
+        }
+      }).rules,
+      { 'hex-notation': [1, { style: 'uppercase' }] }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'HexNotation': { enabled: true, style: 'lowercase' }
+        }
+      }).rules,
+      { 'hex-notation': [1, { style: 'lowercase' }] }
+    );
+  });
+
   it('HexValidation', function () {
     assert.deepStrictEqual(
       scss2sass.convert({
@@ -448,6 +535,241 @@ describe('Rule Conversion', function () {
         }
       }).rules,
       { 'no-important': 1 }
+    );
+  });
+
+  it('ImportPath', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'ImportPath': { enabled: true }
+        }
+      }).rules,
+      { 'clean-import-paths': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'ImportPath': { enabled: true, leading_underscore: true }
+        }
+      }).rules,
+      { 'clean-import-paths': [1, { 'leading-underscore': true }] }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'ImportPath': { enabled: true, leading_underscore: false }
+        }
+      }).rules,
+      { 'clean-import-paths': [1, { 'leading-underscore': false }] }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'ImportPath': { enabled: true, filename_extension: true }
+        }
+      }).rules,
+      { 'clean-import-paths': [1, { 'filename-extension': true }] }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'ImportPath': { enabled: true, filename_extension: false }
+        }
+      }).rules,
+      { 'clean-import-paths': [1, { 'filename-extension': false }] }
+    );
+  });
+
+  it('Indentation', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'Indentation': { enabled: true }
+        }
+      }).rules,
+      { 'indentation': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'Indentation': { enabled: true, width: 4 }
+        }
+      }).rules,
+      { 'indentation': [1, { size: 4 }] }
+    );
+  });
+
+  it('LeadingZero', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'LeadingZero': { enabled: true }
+        }
+      }).rules,
+      { 'leading-zero': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'LeadingZero': { enabled: true, style: 'exclude_zero' }
+        }
+      }).rules,
+      { 'leading-zero': [1, { include: false }] }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'LeadingZero': { enabled: true, style: 'include_zero' }
+        }
+      }).rules,
+      { 'leading-zero': [1, { include: true }] }
+    );
+  });
+
+  it('MergeableSelector', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'MergeableSelector': { enabled: true }
+        }
+      }).rules,
+      { 'no-mergeable-selectors': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'MergeableSelector': { enabled: true, force_nesting: true }
+        }
+      }).rules,
+      {
+        'force-attribute-nesting': 1,
+        'force-element-nesting': 1,
+        'force-pseudo-nesting': 1,
+        'no-mergeable-selectors': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'MergeableSelector': { enabled: true, force_nesting: false }
+        }
+      }).rules,
+      {
+        'force-attribute-nesting': 0,
+        'force-element-nesting': 0,
+        'force-pseudo-nesting': 0,
+        'no-mergeable-selectors': 1
+      }
+    );
+  });
+
+  it('NameFormat', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'NameFormat': { enabled: true }
+        }
+      }).rules,
+      {
+        'function-name-format': 1,
+        'mixin-name-format': 1,
+        'variable-name-format': 1,
+        'placeholder-name-format': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'NameFormat': { enabled: true, allow_leading_underscore: true }
+        }
+      }).rules,
+      {
+        'function-name-format': [1, { 'allow-leading-underscore': true }],
+        'mixin-name-format': [1, { 'allow-leading-underscore': true }],
+        'variable-name-format': [1, { 'allow-leading-underscore': true }],
+        'placeholder-name-format': [1, { 'allow-leading-underscore': true }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'NameFormat': { enabled: true, allow_leading_underscore: false }
+        }
+      }).rules,
+      {
+        'function-name-format': [1, { 'allow-leading-underscore': false }],
+        'mixin-name-format': [1, { 'allow-leading-underscore': false }],
+        'variable-name-format': [1, { 'allow-leading-underscore': false }],
+        'placeholder-name-format': [1, { 'allow-leading-underscore': false }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'NameFormat': { enabled: true, convention: 'snake_case' }
+        }
+      }).rules,
+      {
+        'function-name-format': [1, { convention: 'snakecase' }],
+        'mixin-name-format': [1, { convention: 'snakecase' }],
+        'variable-name-format': [1, { convention: 'snakecase' }],
+        'placeholder-name-format': [1, { convention: 'snakecase' }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'NameFormat': { enabled: true, convention_explanation: 'foo' }
+        }
+      }).rules,
+      {
+        'function-name-format': [1, { 'convention-explanation': 'foo' }],
+        'mixin-name-format': [1, { 'convention-explanation': 'foo' }],
+        'variable-name-format': [1, { 'convention-explanation': 'foo' }],
+        'placeholder-name-format': [1, { 'convention-explanation': 'foo' }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'NameFormat': { enabled: true, function_convention: 'snake_case' }
+        }
+      }).rules,
+      {
+        'function-name-format': [1, { convention: 'snakecase' }],
+        'mixin-name-format': 1,
+        'variable-name-format': 1,
+        'placeholder-name-format': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'NameFormat': { enabled: true, mixin_convention_explanation: 'foo' }
+        }
+      }).rules,
+      {
+        'function-name-format': 1,
+        'mixin-name-format': [1, { 'convention-explanation': 'foo' }],
+        'variable-name-format': 1,
+        'placeholder-name-format': 1
+      }
     );
   });
 
@@ -567,6 +889,62 @@ describe('Rule Conversion', function () {
         }
       }).rules,
       { 'url-quotes': 1 }
+    );
+  });
+
+  it('VendorPrefix', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'VendorPrefix': { enabled: true }
+        }
+      }).rules,
+      { 'no-vendor-prefixes': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'VendorPrefix': {
+            enabled: true,
+            additional_identifiers: ['a', 'b', 'c'],
+            excluded_identifiers: ['d', 'e', 'f']
+          }
+        }
+      }).rules,
+      {
+        'no-vendor-prefixes': [
+          1,
+          {
+            'additional-identifiers': ['a', 'b', 'c'],
+            'excluded-identifiers': ['d', 'e', 'f']
+          }
+        ]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'VendorPrefix': {
+            enabled: true,
+            additional_identifiers: []
+          }
+        }
+      }).rules,
+      { 'no-vendor-prefixes': [1, { 'additional-identifiers': [] }] }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'VendorPrefix': {
+            enabled: true,
+            excluded_identifiers: []
+          }
+        }
+      }).rules,
+      { 'no-vendor-prefixes': [1, { 'excluded-identifiers': [] }] }
     );
   });
 
