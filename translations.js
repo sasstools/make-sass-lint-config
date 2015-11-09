@@ -126,12 +126,14 @@ module.exports.LeadingZero = {
 
 module.exports.MergeableSelector = {
   special_case: function (linterValue, sassSettings, severity) {
+    var nestingSeverity = linterValue.force_nesting ? severity : 0;
+
     sassSettings.rules['no-mergeable-selectors'] = severity;
 
-    if (linterValue.force_nesting) {
-      sassSettings.rules['force-pseudo-nesting'] = severity;
-      sassSettings.rules['force-attribute-nesting'] = severity;
-      sassSettings.rules['force-element-nesting'] = severity;
+    if (linterValue.hasOwnProperty('force_nesting')) {
+      sassSettings.rules['force-pseudo-nesting'] = nestingSeverity;
+      sassSettings.rules['force-attribute-nesting'] = nestingSeverity;
+      sassSettings.rules['force-element-nesting'] = nestingSeverity;
     }
   }
 };
