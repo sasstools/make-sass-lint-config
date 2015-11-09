@@ -106,7 +106,7 @@ module.exports.Indentation = {
   name: 'indentation',
   options: {
     width: {
-      name: 'width'
+      name: 'size'
     }
   }
 };
