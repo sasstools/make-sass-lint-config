@@ -10526,6 +10526,10 @@ var convert = function (scssSettings, options) {
     sassSettings.files.include = scssSettings.scss_files;
   }
 
+  if (!scssSettings.linters) {
+    scssSettings.linters = {};
+  }
+
   Object.keys(scssSettings.linters).forEach(function (linterName) {
     var linterValue = scssSettings.linters[linterName],
         severity = getSeverity(linterName, linterValue),
@@ -10616,13 +10620,17 @@ module.exports = {
 },{"./package.json":39,"./translations":40,"js-yaml":7}],39:[function(require,module,exports){
 module.exports={
   "name": "make-sass-lint-config",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Convert your .scss-lint.yml config file into the equivalent .sass-lint.yml",
   "main": "index.js",
+  "bin": {
+    "make-sass-lint-config": "./bin/make-sass-lint-config.js"
+  },
   "scripts": {
     "build": "./node_modules/browserify/bin/cmd.js index.js -o convert.js",
     "pretest": "eslint .",
-    "test": "mocha tests"
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec tests",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
     "type": "git",
@@ -10643,22 +10651,31 @@ module.exports={
   },
   "homepage": "http://sasstools.github.io/make-sass-lint-config/",
   "dependencies": {
+    "commander": "^2.8.1",
     "js-yaml": "^3.4.3"
   },
   "devDependencies": {
-    "browserify": "^11.2.0",
+    "coveralls": "^2.11.4",
     "eslint": "^1.6.0",
+    "fs-extra": "^0.26.2",
+    "istanbul": "^0.4.0",
     "mocha": "^2.3.3"
   },
-  "readme": "Make-Sass-Lint-Config\n=====================\nConvert your .scss-lint.yml config file into the equivalent .sass-lint.yml\n\nUse the online converter\n---\n\nThe easiest way to use this tool is to simply paste the contents of your `.scss-lint.yml` file into the demonstration converter at [sasstools.github.io/make-sass-lint-config](http://sasstools.github.io/make-sass-lint-config/).\n\nProgrammatic Usage\n---\n```javascript\nvar makeSassLintConfig = require('make-sass-lint-config');\nvar jsyaml = require('js-yaml');\nvar fs = require('fs');\n\nvar scssLintConfigYaml = fs.readFileSync('.scss-lint.yml', 'utf8');\n\n// Parse YAML into an object and get the object representation\n// of the sass-lint config\nvar scssLintConfig = jsyaml.safeLoad(scssLintConfigYaml);\nconsole.log(makeSassLintConfig.convert(scssLintConfig));\n\n// Convert a YAML file and get YAML output\nconsole.log(makeSassLintConfig.convertYaml(scssLintConfigYaml));\n```\n\n### convert(scssSettings [ , options ])\nConverts a scss-lint config file into a sass-lint config file\n- `scssSettings` - Settings parsed from YAML\n- `options.debug` - include additional debug information in the returned settings object, default `false`\n\n### convertYaml(scssSettingsYaml)\nPerform `convert` on a string and output the converted yaml\n- `scssSettingsYaml` - scss-lint config in YAML format\n\n",
+  "readme": "# Make-Sass-Lint-Config\n[![npm version](https://badge.fury.io/js/make-sass-lint-config.svg)](https://badge.fury.io/js/make-sass-lint-config)\n[![Build Status](https://travis-ci.org/sasstools/make-sass-lint-config.svg?branch=master)](https://travis-ci.org/sasstools/make-sass-lint-config)\n[![Coverage Status](https://coveralls.io/repos/sasstools/make-sass-lint-config/badge.svg?branch=master&service=github)](https://coveralls.io/github/sasstools/make-sass-lint-config)\n\nConvert your .scss-lint.yml config file into the equivalent .sass-lint.yml\n\nUse the Online Converter\n---\n\nThe easiest way to use this tool is to simply paste the contents of your `.scss-lint.yml` file into the demonstration converter at [sasstools.github.io/make-sass-lint-config](http://sasstools.github.io/make-sass-lint-config/).\n\nCommand Line Usage\n---\n\n```\n$ npm install -g make-sass-lint-config\n$ make-sass-lint-config\n  Usage: make-sass-lint-config [path]\n\n  Convert your .scss-lint.yml config file into the equivalent .sass-lint.yml\n\n  Options:\n\n    -h, --help             output usage information\n    -V, --version          output the version number\n    -o, --output [output]  the path and filename where you would like output to be written\n```\n\n\nProgrammatic Usage\n---\n```javascript\nvar makeSassLintConfig = require('make-sass-lint-config');\nvar jsyaml = require('js-yaml');\nvar fs = require('fs');\n\nvar scssLintConfigYaml = fs.readFileSync('.scss-lint.yml', 'utf8');\n\n// Parse YAML into an object and get the object representation\n// of the sass-lint config\nvar scssLintConfig = jsyaml.safeLoad(scssLintConfigYaml);\nconsole.log(makeSassLintConfig.convert(scssLintConfig));\n\n// Convert a YAML file and get YAML output\nconsole.log(makeSassLintConfig.convertYaml(scssLintConfigYaml));\n```\n\n### convert(scssSettings [ , options ])\nConverts a scss-lint config file into a sass-lint config file\n- `scssSettings` - Settings parsed from YAML\n- `options.debug` - include additional debug information in the returned settings object, default `false`\n\n### convertYaml(scssSettingsYaml)\nPerform `convert` on a string and output the converted yaml\n- `scssSettingsYaml` - scss-lint config in YAML format\n\n",
   "readmeFilename": "README.md",
-  "gitHead": "cbeda512a2334ba19bb6bb45151b0515345964b2",
-  "_id": "make-sass-lint-config@0.0.2",
-  "_shasum": "141f8face87a99bea16ac7b7ff4b81e390597d1f",
+  "gitHead": "07fbc1413291980857d32fea998c993f229afa94",
+  "_id": "make-sass-lint-config@0.0.3",
+  "_shasum": "4b3a512f8ac1e0d92f8a807c7305480310bbfe41",
   "_from": "make-sass-lint-config@*"
 }
 
 },{}],40:[function(require,module,exports){
+// can be easily swapped out for a more efficient method,
+// but since obj is always small it shouldn't matter
+var cloneDeep = function (obj) {
+  return JSON.parse(JSON.stringify(obj));
+};
+
 module.exports.BangFormat = {
   special_case: function (linterValue, sassSettings, severity) {
     if (linterValue.hasOwnProperty('space_before_bang') || severity !== 0) {
@@ -10699,7 +10716,14 @@ module.exports.DeclarationOrder = {
   }
 };
 
-module.exports.DuplicateProperty = { name: 'no-duplicate-properties' };
+module.exports.DuplicateProperty = {
+  name: 'no-duplicate-properties',
+  options: {
+    exclude: {
+      name: 'exclude'
+    }
+  }
+};
 
 module.exports.EmptyLineBetweenBlocks = {
   name: 'empty-line-between-blocks',
@@ -10760,7 +10784,7 @@ module.exports.Indentation = {
   name: 'indentation',
   options: {
     width: {
-      name: 'width'
+      name: 'size'
     }
   }
 };
@@ -10780,26 +10804,28 @@ module.exports.LeadingZero = {
 
 module.exports.MergeableSelector = {
   special_case: function (linterValue, sassSettings, severity) {
+    var nestingSeverity = linterValue.force_nesting ? severity : 0;
+
     sassSettings.rules['no-mergeable-selectors'] = severity;
 
-    if (linterValue.force_nesting) {
-      sassSettings.rules['force-pseudo-nesting'] = severity;
-      sassSettings.rules['force-attribute-nesting'] = severity;
-      sassSettings.rules['force-element-nesting'] = severity;
+    if (linterValue.hasOwnProperty('force_nesting')) {
+      sassSettings.rules['force-pseudo-nesting'] = nestingSeverity;
+      sassSettings.rules['force-attribute-nesting'] = nestingSeverity;
+      sassSettings.rules['force-element-nesting'] = nestingSeverity;
     }
   }
 };
 
 module.exports.NameFormat = {
   special_case: function (linterValue, sassSettings, severity) {
-    var i, name,
-        allowLeadingUnderscore = linterValue.allow_leading_underscore !== false,
+    var i, name, specificSettings,
+        generalSettings = {},
         types = ['function', 'mixin', 'placeholder', 'variable'],
         translateConvention = function (_convention) {
           if (_convention instanceof RegExp) {
             return _convention;
           }
-          else if (typeof _convention === 'undefined' || _convention === 'hyphenated_lowercase') {
+          else if (_convention === 'hyphenated_lowercase') {
             return 'hyphenatedlowercase';
           }
           else if (_convention === 'snake_case') {
@@ -10813,27 +10839,35 @@ module.exports.NameFormat = {
           }
         };
 
+    if (linterValue.hasOwnProperty('allow_leading_underscore')) {
+      generalSettings['allow-leading-underscore'] = linterValue.allow_leading_underscore;
+    }
+
+    if (linterValue.hasOwnProperty('convention')) {
+      generalSettings.convention = translateConvention(linterValue.convention);
+    }
+
+    if (linterValue.hasOwnProperty('convention_explanation')) {
+      generalSettings['convention-explanation'] = linterValue.convention_explanation;
+    }
+
     for (i = 0; i < types.length; i++) {
       name = types[i];
-
-      // set default
-      sassSettings.rules[name + '-name-format'] = [
-        severity,
-        {
-          'allow-leading-underscore': allowLeadingUnderscore,
-          convention: translateConvention(linterValue.convention)
-        }
-      ];
+      specificSettings = cloneDeep(generalSettings);
 
       if (linterValue[name + '_convention']) {
-        sassSettings.rules[name + '-name-format'][1].convention = translateConvention(linterValue[name + '_convention']);
+        specificSettings.convention = translateConvention(linterValue[name + '_convention']);
       }
 
       if (linterValue[name + '_convention_explanation']) {
-        sassSettings.rules[name + '-name-format'][1]['convention-explanation'] = linterValue[name + '_convention_explanation'];
+        specificSettings['convention-explanation'] = linterValue[name + '_convention_explanation'];
       }
-      else if (linterValue.convention_explanation) {
-        sassSettings.rules[name + '-name-format'][1]['convention-explanation'] = linterValue.convention_explanation;
+
+      if (Object.keys(specificSettings).length > 0) {
+        sassSettings.rules[name + '-name-format'] = [severity, specificSettings];
+      }
+      else {
+        sassSettings.rules[name + '-name-format'] = severity;
       }
     }
   }
