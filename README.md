@@ -1,5 +1,8 @@
-Make-Sass-Lint-Config
-=====================
+# Make-Sass-Lint-Config
+[![npm version](https://badge.fury.io/js/make-sass-lint-config.svg)](https://badge.fury.io/js/make-sass-lint-config)
+[![Build Status](https://travis-ci.org/sasstools/make-sass-lint-config.svg?branch=master)](https://travis-ci.org/sasstools/make-sass-lint-config)
+[![Coverage Status](https://coveralls.io/repos/sasstools/make-sass-lint-config/badge.svg?branch=master&service=github)](https://coveralls.io/github/sasstools/make-sass-lint-config)
+
 Convert your .scss-lint.yml config file into the equivalent .sass-lint.yml
 
 Use the Online Converter
