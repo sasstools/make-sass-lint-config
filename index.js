@@ -75,6 +75,10 @@ var convert = function (scssSettings, options) {
     sassSettings.files.include = scssSettings.scss_files;
   }
 
+  if (!scssSettings.linters) {
+    scssSettings.linters = {};
+  }
+
   Object.keys(scssSettings.linters).forEach(function (linterName) {
     var linterValue = scssSettings.linters[linterName],
         severity = getSeverity(linterName, linterValue),

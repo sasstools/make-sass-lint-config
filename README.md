@@ -1,11 +1,32 @@
-Make-Sass-Lint-Config
-=====================
+# Make-Sass-Lint-Config
+[![npm version](https://badge.fury.io/js/make-sass-lint-config.svg)](https://badge.fury.io/js/make-sass-lint-config)
+[![Build Status](https://travis-ci.org/sasstools/make-sass-lint-config.svg?branch=master)](https://travis-ci.org/sasstools/make-sass-lint-config)
+[![Coverage Status](https://coveralls.io/repos/sasstools/make-sass-lint-config/badge.svg?branch=master&service=github)](https://coveralls.io/github/sasstools/make-sass-lint-config)
+
 Convert your .scss-lint.yml config file into the equivalent .sass-lint.yml
 
-Use the online converter
+Use the Online Converter
 ---
 
 The easiest way to use this tool is to simply paste the contents of your `.scss-lint.yml` file into the demonstration converter at [sasstools.github.io/make-sass-lint-config](http://sasstools.github.io/make-sass-lint-config/).
+
+Command Line Usage
+---
+
+```
+$ npm install -g make-sass-lint-config
+$ make-sass-lint-config
+  Usage: make-sass-lint-config [path]
+
+  Convert your .scss-lint.yml config file into the equivalent .sass-lint.yml
+
+  Options:
+
+    -h, --help             output usage information
+    -V, --version          output the version number
+    -o, --output [output]  the path and filename where you would like output to be written
+```
+
 
 Programmatic Usage
 ---
