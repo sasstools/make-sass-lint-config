@@ -150,10 +150,7 @@ module.exports.NameFormat = {
         generalSettings = {},
         types = ['function', 'mixin', 'placeholder', 'variable'],
         translateConvention = function (_convention) {
-          if (_convention instanceof RegExp) {
-            return _convention;
-          }
-          else if (_convention === 'hyphenated_lowercase') {
+          if (_convention === 'hyphenated_lowercase') {
             return 'hyphenatedlowercase';
           }
           else if (_convention === 'snake_case') {
@@ -163,7 +160,8 @@ module.exports.NameFormat = {
             return 'camelcase';
           }
           else {
-            return 'ERROR_INVALID_CONVENTION';
+            // default assumes a regexp
+            return _convention;
           }
         };
 

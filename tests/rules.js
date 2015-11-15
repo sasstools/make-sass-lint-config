@@ -733,6 +733,34 @@ describe('Rule Conversion', function () {
     assert.deepStrictEqual(
       scss2sass.convert({
         linters: {
+          'NameFormat': { enabled: true, convention: 'camel_case' }
+        }
+      }).rules,
+      {
+        'function-name-format': [1, { convention: 'camelcase' }],
+        'mixin-name-format': [1, { convention: 'camelcase' }],
+        'variable-name-format': [1, { convention: 'camelcase' }],
+        'placeholder-name-format': [1, { convention: 'camelcase' }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'NameFormat': { enabled: true, convention: 'foo' }
+        }
+      }).rules,
+      {
+        'function-name-format': [1, { convention: 'foo' }],
+        'mixin-name-format': [1, { convention: 'foo' }],
+        'variable-name-format': [1, { convention: 'foo' }],
+        'placeholder-name-format': [1, { convention: 'foo' }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
           'NameFormat': { enabled: true, convention_explanation: 'foo' }
         }
       }).rules,
@@ -761,6 +789,62 @@ describe('Rule Conversion', function () {
     assert.deepStrictEqual(
       scss2sass.convert({
         linters: {
+          'NameFormat': { enabled: true, mixin_convention: 'snake_case' }
+        }
+      }).rules,
+      {
+        'function-name-format': 1,
+        'mixin-name-format': [1, { convention: 'snakecase' }],
+        'variable-name-format': 1,
+        'placeholder-name-format': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'NameFormat': { enabled: true, variable_convention: 'snake_case' }
+        }
+      }).rules,
+      {
+        'function-name-format': 1,
+        'mixin-name-format': 1,
+        'variable-name-format': [1, { convention: 'snakecase' }],
+        'placeholder-name-format': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'NameFormat': { enabled: true, placeholder_convention: 'snake_case' }
+        }
+      }).rules,
+      {
+        'function-name-format': 1,
+        'mixin-name-format': 1,
+        'variable-name-format': 1,
+        'placeholder-name-format': [1, { convention: 'snakecase' }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'NameFormat': { enabled: true, function_convention_explanation: 'foo' }
+        }
+      }).rules,
+      {
+        'function-name-format': [1, { 'convention-explanation': 'foo' }],
+        'mixin-name-format': 1,
+        'variable-name-format': 1,
+        'placeholder-name-format': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
           'NameFormat': { enabled: true, mixin_convention_explanation: 'foo' }
         }
       }).rules,
@@ -769,6 +853,34 @@ describe('Rule Conversion', function () {
         'mixin-name-format': [1, { 'convention-explanation': 'foo' }],
         'variable-name-format': 1,
         'placeholder-name-format': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'NameFormat': { enabled: true, variable_convention_explanation: 'foo' }
+        }
+      }).rules,
+      {
+        'function-name-format': 1,
+        'mixin-name-format': 1,
+        'variable-name-format': [1, { 'convention-explanation': 'foo' }],
+        'placeholder-name-format': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'NameFormat': { enabled: true, placeholder_convention_explanation: 'foo' }
+        }
+      }).rules,
+      {
+        'function-name-format': 1,
+        'mixin-name-format': 1,
+        'variable-name-format': 1,
+        'placeholder-name-format': [1, { 'convention-explanation': 'foo' }]
       }
     );
   });
