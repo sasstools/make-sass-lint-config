@@ -71,6 +71,10 @@ var convert = function (scssSettings, options) {
       unsupported = [],
       warnings = [];
 
+  if (!scssSettings) {
+    throw new Error('no input');
+  }
+
   if (scssSettings.scss_files) {
     sassSettings.files.include = scssSettings.scss_files;
   }
