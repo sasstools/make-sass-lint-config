@@ -10522,6 +10522,10 @@ var convert = function (scssSettings, options) {
       unsupported = [],
       warnings = [];
 
+  if (!scssSettings) {
+    throw new Error('no input');
+  }
+
   if (scssSettings.scss_files) {
     sassSettings.files.include = scssSettings.scss_files;
   }
@@ -10620,7 +10624,7 @@ module.exports = {
 },{"./package.json":39,"./translations":40,"js-yaml":7}],39:[function(require,module,exports){
 module.exports={
   "name": "make-sass-lint-config",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Convert your .scss-lint.yml config file into the equivalent .sass-lint.yml",
   "main": "index.js",
   "bin": {
@@ -10663,9 +10667,9 @@ module.exports={
   },
   "readme": "# Make-Sass-Lint-Config\n[![npm version](https://badge.fury.io/js/make-sass-lint-config.svg)](https://badge.fury.io/js/make-sass-lint-config)\n[![Build Status](https://travis-ci.org/sasstools/make-sass-lint-config.svg?branch=master)](https://travis-ci.org/sasstools/make-sass-lint-config)\n[![Coverage Status](https://coveralls.io/repos/sasstools/make-sass-lint-config/badge.svg?branch=master&service=github)](https://coveralls.io/github/sasstools/make-sass-lint-config)\n\nConvert your .scss-lint.yml config file into the equivalent .sass-lint.yml\n\nUse the Online Converter\n---\n\nThe easiest way to use this tool is to simply paste the contents of your `.scss-lint.yml` file into the demonstration converter at [sasstools.github.io/make-sass-lint-config](http://sasstools.github.io/make-sass-lint-config/).\n\nCommand Line Usage\n---\n\n```\n$ npm install -g make-sass-lint-config\n$ make-sass-lint-config\n  Usage: make-sass-lint-config [path]\n\n  Convert your .scss-lint.yml config file into the equivalent .sass-lint.yml\n\n  Options:\n\n    -h, --help             output usage information\n    -V, --version          output the version number\n    -o, --output [output]  the path and filename where you would like output to be written\n```\n\n\nProgrammatic Usage\n---\n```javascript\nvar makeSassLintConfig = require('make-sass-lint-config');\nvar jsyaml = require('js-yaml');\nvar fs = require('fs');\n\nvar scssLintConfigYaml = fs.readFileSync('.scss-lint.yml', 'utf8');\n\n// Parse YAML into an object and get the object representation\n// of the sass-lint config\nvar scssLintConfig = jsyaml.safeLoad(scssLintConfigYaml);\nconsole.log(makeSassLintConfig.convert(scssLintConfig));\n\n// Convert a YAML file and get YAML output\nconsole.log(makeSassLintConfig.convertYaml(scssLintConfigYaml));\n```\n\n### convert(scssSettings [ , options ])\nConverts a scss-lint config file into a sass-lint config file\n- `scssSettings` - Settings parsed from YAML\n- `options.debug` - include additional debug information in the returned settings object, default `false`\n\n### convertYaml(scssSettingsYaml)\nPerform `convert` on a string and output the converted yaml\n- `scssSettingsYaml` - scss-lint config in YAML format\n\n",
   "readmeFilename": "README.md",
-  "gitHead": "07fbc1413291980857d32fea998c993f229afa94",
-  "_id": "make-sass-lint-config@0.0.3",
-  "_shasum": "4b3a512f8ac1e0d92f8a807c7305480310bbfe41",
+  "gitHead": "90abd5e081a3483b1263ba02c3901f5f4eabe6c4",
+  "_id": "make-sass-lint-config@0.0.4",
+  "_shasum": "833e613258ba851b21d078348306f68ffc12a8e0",
   "_from": "make-sass-lint-config@*"
 }
 
@@ -10822,10 +10826,7 @@ module.exports.NameFormat = {
         generalSettings = {},
         types = ['function', 'mixin', 'placeholder', 'variable'],
         translateConvention = function (_convention) {
-          if (_convention instanceof RegExp) {
-            return _convention;
-          }
-          else if (_convention === 'hyphenated_lowercase') {
+          if (_convention === 'hyphenated_lowercase') {
             return 'hyphenatedlowercase';
           }
           else if (_convention === 'snake_case') {
@@ -10835,7 +10836,8 @@ module.exports.NameFormat = {
             return 'camelcase';
           }
           else {
-            return 'ERROR_INVALID_CONVENTION';
+            // default assumes a regexp
+            return _convention;
           }
         };
 
