@@ -916,6 +916,110 @@ describe('Rule Conversion', function () {
     );
   });
 
+  it('PropertySpelling', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'PropertySpelling': { enabled: true }
+        }
+      }).rules,
+      { 'no-misspelled-properties': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'PropertySpelling': { enabled: true, extra_properties: ['foo'] }
+        }
+      }).rules,
+      { 'no-misspelled-properties': [1, { 'extra-properties': ['foo'] }] }
+    );
+  });
+
+  it('QualifyingElement', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'QualifyingElement': { enabled: true }
+        }
+      }).rules,
+      { 'no-qualifying-elements': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'QualifyingElement': {
+            enabled: true,
+            allow_element_with_attribute: true,
+            allow_element_with_class: true,
+            allow_element_with_id: true
+          }
+        }
+      }).rules,
+      {
+        'no-qualifying-elements': [1, {
+          'allow-element-with-attribute': true,
+          'allow-element-with-class': true,
+          'allow-element-with-id': true
+        }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'QualifyingElement': {
+            enabled: true,
+            allow_element_with_attribute: false,
+            allow_element_with_class: false,
+            allow_element_with_id: false
+          }
+        }
+      }).rules,
+      {
+        'no-qualifying-elements': [1, {
+          'allow-element-with-attribute': false,
+          'allow-element-with-class': false,
+          'allow-element-with-id': false
+        }]
+      }
+    );
+  });
+
+  it('Shorthand', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'Shorthand': { enabled: true }
+        }
+      }).rules,
+      { 'shorthand-values': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'Shorthand': { enabled: true, allowed_shorthands: [1, 2, 3] }
+        }
+      }).rules,
+      {
+        'shorthand-values': [1, { 'allowed-shorthands': [1, 2, 3] }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'Shorthand': { enabled: true, allowed_shorthands: [1, 3] }
+        }
+      }).rules,
+      {
+        'shorthand-values': [1, { 'allowed-shorthands': [1, 3] }]
+      }
+    );
+  });
+
   it('SingleLinePerSelector', function () {
     assert.deepStrictEqual(
       scss2sass.convert({
@@ -946,6 +1050,73 @@ describe('Rule Conversion', function () {
         }
       }).rules,
       { 'space-before-colon': 1 }
+    );
+  });
+
+  it('SpaceBetweenParens', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SpaceBetweenParens': { enabled: true }
+        }
+      }).rules,
+      { 'space-between-parens': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SpaceBetweenParens': { enabled: true, spaces: 0 }
+        }
+      }).rules,
+      { 'space-between-parens': [1, { include: false }] }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SpaceBetweenParens': { enabled: true, spaces: 1 }
+        }
+      }).rules,
+      { 'space-between-parens': [1, { include: true }] }
+    );
+
+    assert.equal(
+      scss2sass.convert({
+        linters: {
+          'SpaceBetweenParens': { enabled: true, spaces: 2 }
+        }
+      }, { debug: true }).warnings.length,
+      1
+    );
+  });
+
+  it('StringQuotes', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'StringQuotes': { enabled: true }
+        }
+      }).rules,
+      { 'quotes': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'StringQuotes': { enabled: true, style: 'single_quotes' }
+        }
+      }).rules,
+      { 'quotes': [1, { style: 'single' }] }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'StringQuotes': { enabled: true, style: 'double_quotes' }
+        }
+      }).rules,
+      { 'quotes': [1, { style: 'double' }] }
     );
   });
 
@@ -1001,6 +1172,26 @@ describe('Rule Conversion', function () {
         }
       }).rules,
       { 'url-quotes': 1 }
+    );
+  });
+
+  it('VariableForProperty', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'VariableForProperty': { enabled: true }
+        }
+      }).rules,
+      { 'variable-for-property': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'VariableForProperty': { enabled: true, properties: ['foo', 'bar', 'baz'] }
+        }
+      }).rules,
+      { 'variable-for-property': [1, { properties: ['foo', 'bar', 'baz'] }] }
     );
   });
 
