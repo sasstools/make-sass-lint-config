@@ -226,6 +226,9 @@ module.exports.PropertySortOrder = {
   options: {
     order: {
       name: 'order'
+    },
+    ignore_unspecified: {
+      name: 'ignore-custom-properties'
     }
   }
 };

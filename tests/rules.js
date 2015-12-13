@@ -953,6 +953,24 @@ describe('Rule Conversion', function () {
     assert.deepStrictEqual(
       scss2sass.convert({
         linters: {
+          'PropertySortOrder': { enabled: true, ignore_unspecified: true }
+        }
+      }).rules,
+      { 'property-sort-order': [1, { 'ignore-custom-properties': true }] }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'PropertySortOrder': { enabled: true, ignore_unspecified: false }
+        }
+      }).rules,
+      { 'property-sort-order': [1, { 'ignore-custom-properties': false }] }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
           'PropertySortOrder': { enabled: true, order: ['foo', 'bar', 'baz'] }
         }
       }).rules,
