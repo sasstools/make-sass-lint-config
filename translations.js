@@ -235,6 +235,18 @@ module.exports.PropertySpelling = {
   }
 };
 
+module.exports.PropertyUnits = {
+  name: 'property-units',
+  options: {
+    global: {
+      name: 'global'
+    },
+    properties: {
+      name: 'per-property'
+    }
+  }
+};
+
 module.exports.QualifyingElement = {
   name: 'no-qualifying-elements',
   options: {

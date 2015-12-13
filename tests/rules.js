@@ -980,6 +980,44 @@ describe('Rule Conversion', function () {
     );
   });
 
+  it('PropertyUnits', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'PropertyUnits': { enabled: true }
+        }
+      }).rules,
+      { 'property-units': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'PropertyUnits': { enabled: true, global: [] }
+        }
+      }).rules,
+      { 'property-units': [1, { global: [] }] }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'PropertyUnits': { enabled: true, global: ['px'] }
+        }
+      }).rules,
+      { 'property-units': [1, { global: ['px'] }] }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'PropertyUnits': { enabled: true, properties: { width: ['px'] } }
+        }
+      }).rules,
+      { 'property-units': [1, { 'per-property': { width: ['px'] } }] }
+    );
+  });
+
   it('QualifyingElement', function () {
     assert.deepStrictEqual(
       scss2sass.convert({
