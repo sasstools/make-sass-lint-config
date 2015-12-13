@@ -28,7 +28,8 @@ module.exports.BemDepth = {
     max_depth: {
       name: 'max-depth'
     }
-  }
+  },
+  defaultDisabled: true
 };
 
 module.exports.BorderZero = {
