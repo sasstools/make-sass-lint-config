@@ -22,6 +22,15 @@ module.exports.BangFormat = {
   }
 };
 
+module.exports.BemDepth = {
+  name: 'bem-depth',
+  options: {
+    max_depth: {
+      name: 'max-depth'
+    }
+  }
+};
+
 module.exports.BorderZero = {
   name: 'border-zero',
   options: {
