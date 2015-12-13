@@ -272,7 +272,7 @@ describe('Rule Conversion', function () {
     assert.deepStrictEqual(
       scss2sass.convert({
         linters: {
-          'BemDepth': { enabled: true, max_depth: 4 }
+          'BemDepth': { enabled: true, max_elements: 4 }
         }
       }).rules,
       {

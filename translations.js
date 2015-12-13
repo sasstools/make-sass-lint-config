@@ -25,7 +25,7 @@ module.exports.BangFormat = {
 module.exports.BemDepth = {
   name: 'bem-depth',
   options: {
-    max_depth: {
+    max_elements: {
       name: 'max-depth'
     }
   },
