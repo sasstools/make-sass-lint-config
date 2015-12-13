@@ -1042,20 +1042,7 @@ describe('Rule Conversion', function () {
         'attribute-name-format': 1,
         'class-name-format': 1,
         'element-name-format': 1,
-        'placeholder-name-format': 1
-      }
-    );
-
-    assert.deepStrictEqual(
-      scss2sass.convert({
-        linters: {
-          'SelectorFormat': { enabled: true }
-        }
-      }).rules,
-      {
-        'attribute-name-format': 1,
-        'class-name-format': 1,
-        'element-name-format': 1,
+        'id-name-format': 1,
         'placeholder-name-format': 1
       }
     );
@@ -1070,6 +1057,7 @@ describe('Rule Conversion', function () {
         'attribute-name-format': [1, { 'allow-leading-underscore': true }],
         'class-name-format': [1, { 'allow-leading-underscore': true }],
         'element-name-format': [1, { 'allow-leading-underscore': true }],
+        'id-name-format': [1, { 'allow-leading-underscore': true }],
         'placeholder-name-format': [1, { 'allow-leading-underscore': true }]
       }
     );
@@ -1084,6 +1072,7 @@ describe('Rule Conversion', function () {
         'attribute-name-format': [1, { 'allow-leading-underscore': false }],
         'class-name-format': [1, { 'allow-leading-underscore': false }],
         'element-name-format': [1, { 'allow-leading-underscore': false }],
+        'id-name-format': [1, { 'allow-leading-underscore': false }],
         'placeholder-name-format': [1, { 'allow-leading-underscore': false }]
       }
     );
@@ -1098,6 +1087,7 @@ describe('Rule Conversion', function () {
         'attribute-name-format': [1, { 'ignore': ['foo'] }],
         'class-name-format': [1, { 'ignore': ['foo'] }],
         'element-name-format': [1, { 'ignore': ['foo'] }],
+        'id-name-format': [1, { 'ignore': ['foo'] }],
         'placeholder-name-format': [1, { 'ignore': ['foo'] }]
       }
     );
@@ -1112,6 +1102,7 @@ describe('Rule Conversion', function () {
         'attribute-name-format': [1, { convention: 'snakecase' }],
         'class-name-format': [1, { convention: 'snakecase' }],
         'element-name-format': [1, { convention: 'snakecase' }],
+        'id-name-format': [1, { convention: 'snakecase' }],
         'placeholder-name-format': [1, { convention: 'snakecase' }]
       }
     );
@@ -1126,6 +1117,7 @@ describe('Rule Conversion', function () {
         'attribute-name-format': [1, { convention: 'camelcase' }],
         'class-name-format': [1, { convention: 'camelcase' }],
         'element-name-format': [1, { convention: 'camelcase' }],
+        'id-name-format': [1, { convention: 'camelcase' }],
         'placeholder-name-format': [1, { convention: 'camelcase' }]
       }
     );
@@ -1140,6 +1132,7 @@ describe('Rule Conversion', function () {
         'attribute-name-format': [1, { convention: 'strictbem' }],
         'class-name-format': [1, { convention: 'strictbem' }],
         'element-name-format': [1, { convention: 'strictbem' }],
+        'id-name-format': [1, { convention: 'strictbem' }],
         'placeholder-name-format': [1, { convention: 'strictbem' }]
       }
     );
@@ -1154,6 +1147,7 @@ describe('Rule Conversion', function () {
         'attribute-name-format': [1, { convention: 'hyphenatedbem' }],
         'class-name-format': [1, { convention: 'hyphenatedbem' }],
         'element-name-format': [1, { convention: 'hyphenatedbem' }],
+        'id-name-format': [1, { convention: 'hyphenatedbem' }],
         'placeholder-name-format': [1, { convention: 'hyphenatedbem' }]
       }
     );
@@ -1168,6 +1162,7 @@ describe('Rule Conversion', function () {
         'attribute-name-format': [1, { convention: 'foo' }],
         'class-name-format': [1, { convention: 'foo' }],
         'element-name-format': [1, { convention: 'foo' }],
+        'id-name-format': [1, { convention: 'foo' }],
         'placeholder-name-format': [1, { convention: 'foo' }]
       }
     );
@@ -1182,6 +1177,7 @@ describe('Rule Conversion', function () {
         'attribute-name-format': [1, { 'convention-explanation': 'foo' }],
         'class-name-format': [1, { 'convention-explanation': 'foo' }],
         'element-name-format': [1, { 'convention-explanation': 'foo' }],
+        'id-name-format': [1, { 'convention-explanation': 'foo' }],
         'placeholder-name-format': [1, { 'convention-explanation': 'foo' }]
       }
     );
@@ -1196,6 +1192,7 @@ describe('Rule Conversion', function () {
         'attribute-name-format': [1, { convention: 'snakecase' }],
         'class-name-format': 1,
         'element-name-format': 1,
+        'id-name-format': 1,
         'placeholder-name-format': 1
       }
     );
@@ -1210,6 +1207,7 @@ describe('Rule Conversion', function () {
         'attribute-name-format': 1,
         'class-name-format': [1, { convention: 'snakecase' }],
         'element-name-format': 1,
+        'id-name-format': 1,
         'placeholder-name-format': 1
       }
     );
@@ -1224,6 +1222,22 @@ describe('Rule Conversion', function () {
         'attribute-name-format': 1,
         'class-name-format': 1,
         'element-name-format': [1, { convention: 'snakecase' }],
+        'id-name-format': 1,
+        'placeholder-name-format': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, id_convention: 'snake_case' }
+        }
+      }).rules,
+      {
+        'attribute-name-format': 1,
+        'class-name-format': 1,
+        'element-name-format': 1,
+        'id-name-format': [1, { convention: 'snakecase' }],
         'placeholder-name-format': 1
       }
     );
@@ -1238,6 +1252,7 @@ describe('Rule Conversion', function () {
         'attribute-name-format': 1,
         'class-name-format': 1,
         'element-name-format': 1,
+        'id-name-format': 1,
         'placeholder-name-format': [1, { convention: 'snakecase' }]
       }
     );
@@ -1252,6 +1267,7 @@ describe('Rule Conversion', function () {
         'attribute-name-format': [1, { 'convention-explanation': 'foo' }],
         'class-name-format': 1,
         'element-name-format': 1,
+        'id-name-format': 1,
         'placeholder-name-format': 1
       }
     );
@@ -1266,6 +1282,7 @@ describe('Rule Conversion', function () {
         'attribute-name-format': 1,
         'class-name-format': [1, { 'convention-explanation': 'foo' }],
         'element-name-format': 1,
+        'id-name-format': 1,
         'placeholder-name-format': 1
       }
     );
@@ -1280,6 +1297,22 @@ describe('Rule Conversion', function () {
         'attribute-name-format': 1,
         'class-name-format': 1,
         'element-name-format': [1, { 'convention-explanation': 'foo' }],
+        'id-name-format': 1,
+        'placeholder-name-format': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, id_convention_explanation: 'foo' }
+        }
+      }).rules,
+      {
+        'attribute-name-format': 1,
+        'class-name-format': 1,
+        'element-name-format': 1,
+        'id-name-format': [1, { 'convention-explanation': 'foo' }],
         'placeholder-name-format': 1
       }
     );
@@ -1294,6 +1327,7 @@ describe('Rule Conversion', function () {
         'attribute-name-format': 1,
         'class-name-format': 1,
         'element-name-format': 1,
+        'id-name-format': 1,
         'placeholder-name-format': [1, { 'convention-explanation': 'foo' }]
       }
     );
