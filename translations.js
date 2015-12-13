@@ -63,6 +63,8 @@ module.exports.DuplicateProperty = {
   }
 };
 
+// missing: ElsePlacement
+
 module.exports.EmptyLineBetweenBlocks = {
   name: 'empty-line-between-blocks',
   options: {
@@ -217,6 +219,8 @@ module.exports.NestingDepth = {
 
 module.exports.PlaceholderInExtend = { name: 'placeholder-in-extend' };
 
+// missing: PropertyCount
+
 module.exports.PropertySortOrder = {
   name: 'property-sort-order',
   options: {
@@ -261,6 +265,8 @@ module.exports.QualifyingElement = {
     }
   }
 };
+
+// missing: SelectorDepth
 
 module.exports.SelectorFormat = {
   special_case: function (linterValue, sassSettings, severity) {
@@ -413,8 +419,15 @@ module.exports.StringQuotes = {
 };
 
 module.exports.TrailingSemicolon = { name: 'trailing-semicolon' };
+
+// missing: TrailingWhitespace
+
 module.exports.TrailingZero = { name: 'no-trailing-zero', defaultDisabled: true };
 module.exports.TransitionAll = { name: 'no-transition-all', defaultDisabled: true };
+
+// missing: UnnecessaryMantissa
+// missing: UnnecessaryParentReference
+
 module.exports.UrlFormat = { name: 'no-url-protocols' };
 module.exports.UrlQuotes = { name: 'url-quotes' };
 
