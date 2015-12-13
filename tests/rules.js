@@ -916,6 +916,26 @@ describe('Rule Conversion', function () {
     );
   });
 
+  it('PropertySortOrder', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'PropertySortOrder': { enabled: true }
+        }
+      }).rules,
+      { 'property-sort-order': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'PropertySortOrder': { enabled: true, order: ['foo', 'bar', 'baz'] }
+        }
+      }).rules,
+      { 'property-sort-order': [1, { order: ['foo', 'bar', 'baz'] }] }
+    );
+  });
+
   it('PropertySpelling', function () {
     assert.deepStrictEqual(
       scss2sass.convert({
@@ -987,6 +1007,274 @@ describe('Rule Conversion', function () {
     );
   });
 
+  it('SelectorFormat', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true }
+        }
+      }).rules,
+      {
+        'attribute-name-format': 1,
+        'class-name-format': 1,
+        'element-name-format': 1,
+        'placeholder-name-format': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true }
+        }
+      }).rules,
+      {
+        'attribute-name-format': 1,
+        'class-name-format': 1,
+        'element-name-format': 1,
+        'placeholder-name-format': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, allow_leading_underscore: true }
+        }
+      }).rules,
+      {
+        'attribute-name-format': [1, { 'allow-leading-underscore': true }],
+        'class-name-format': [1, { 'allow-leading-underscore': true }],
+        'element-name-format': [1, { 'allow-leading-underscore': true }],
+        'placeholder-name-format': [1, { 'allow-leading-underscore': true }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, allow_leading_underscore: false }
+        }
+      }).rules,
+      {
+        'attribute-name-format': [1, { 'allow-leading-underscore': false }],
+        'class-name-format': [1, { 'allow-leading-underscore': false }],
+        'element-name-format': [1, { 'allow-leading-underscore': false }],
+        'placeholder-name-format': [1, { 'allow-leading-underscore': false }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, ignored_names: ['foo'] }
+        }
+      }).rules,
+      {
+        'attribute-name-format': [1, { 'ignore': ['foo'] }],
+        'class-name-format': [1, { 'ignore': ['foo'] }],
+        'element-name-format': [1, { 'ignore': ['foo'] }],
+        'placeholder-name-format': [1, { 'ignore': ['foo'] }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, convention: 'snake_case' }
+        }
+      }).rules,
+      {
+        'attribute-name-format': [1, { convention: 'snakecase' }],
+        'class-name-format': [1, { convention: 'snakecase' }],
+        'element-name-format': [1, { convention: 'snakecase' }],
+        'placeholder-name-format': [1, { convention: 'snakecase' }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, convention: 'camel_case' }
+        }
+      }).rules,
+      {
+        'attribute-name-format': [1, { convention: 'camelcase' }],
+        'class-name-format': [1, { convention: 'camelcase' }],
+        'element-name-format': [1, { convention: 'camelcase' }],
+        'placeholder-name-format': [1, { convention: 'camelcase' }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, convention: 'strict_BEM' }
+        }
+      }).rules,
+      {
+        'attribute-name-format': [1, { convention: 'strictbem' }],
+        'class-name-format': [1, { convention: 'strictbem' }],
+        'element-name-format': [1, { convention: 'strictbem' }],
+        'placeholder-name-format': [1, { convention: 'strictbem' }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, convention: 'hyphenated_BEM' }
+        }
+      }).rules,
+      {
+        'attribute-name-format': [1, { convention: 'hyphenatedbem' }],
+        'class-name-format': [1, { convention: 'hyphenatedbem' }],
+        'element-name-format': [1, { convention: 'hyphenatedbem' }],
+        'placeholder-name-format': [1, { convention: 'hyphenatedbem' }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, convention: 'foo' }
+        }
+      }).rules,
+      {
+        'attribute-name-format': [1, { convention: 'foo' }],
+        'class-name-format': [1, { convention: 'foo' }],
+        'element-name-format': [1, { convention: 'foo' }],
+        'placeholder-name-format': [1, { convention: 'foo' }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, convention_explanation: 'foo' }
+        }
+      }).rules,
+      {
+        'attribute-name-format': [1, { 'convention-explanation': 'foo' }],
+        'class-name-format': [1, { 'convention-explanation': 'foo' }],
+        'element-name-format': [1, { 'convention-explanation': 'foo' }],
+        'placeholder-name-format': [1, { 'convention-explanation': 'foo' }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, attribute_convention: 'snake_case' }
+        }
+      }).rules,
+      {
+        'attribute-name-format': [1, { convention: 'snakecase' }],
+        'class-name-format': 1,
+        'element-name-format': 1,
+        'placeholder-name-format': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, class_convention: 'snake_case' }
+        }
+      }).rules,
+      {
+        'attribute-name-format': 1,
+        'class-name-format': [1, { convention: 'snakecase' }],
+        'element-name-format': 1,
+        'placeholder-name-format': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, element_convention: 'snake_case' }
+        }
+      }).rules,
+      {
+        'attribute-name-format': 1,
+        'class-name-format': 1,
+        'element-name-format': [1, { convention: 'snakecase' }],
+        'placeholder-name-format': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, placeholder_convention: 'snake_case' }
+        }
+      }).rules,
+      {
+        'attribute-name-format': 1,
+        'class-name-format': 1,
+        'element-name-format': 1,
+        'placeholder-name-format': [1, { convention: 'snakecase' }]
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, attribute_convention_explanation: 'foo' }
+        }
+      }).rules,
+      {
+        'attribute-name-format': [1, { 'convention-explanation': 'foo' }],
+        'class-name-format': 1,
+        'element-name-format': 1,
+        'placeholder-name-format': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, class_convention_explanation: 'foo' }
+        }
+      }).rules,
+      {
+        'attribute-name-format': 1,
+        'class-name-format': [1, { 'convention-explanation': 'foo' }],
+        'element-name-format': 1,
+        'placeholder-name-format': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, element_convention_explanation: 'foo' }
+        }
+      }).rules,
+      {
+        'attribute-name-format': 1,
+        'class-name-format': 1,
+        'element-name-format': [1, { 'convention-explanation': 'foo' }],
+        'placeholder-name-format': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SelectorFormat': { enabled: true, placeholder_convention_explanation: 'foo' }
+        }
+      }).rules,
+      {
+        'attribute-name-format': 1,
+        'class-name-format': 1,
+        'element-name-format': 1,
+        'placeholder-name-format': [1, { 'convention-explanation': 'foo' }]
+      }
+    );
+  });
+
   it('Shorthand', function () {
     assert.deepStrictEqual(
       scss2sass.convert({
@@ -1020,6 +1308,8 @@ describe('Rule Conversion', function () {
     );
   });
 
+  // Missing: SingleLinePerProperty
+
   it('SingleLinePerSelector', function () {
     assert.deepStrictEqual(
       scss2sass.convert({
@@ -1028,6 +1318,64 @@ describe('Rule Conversion', function () {
         }
       }).rules,
       { 'single-line-per-selector': 1 }
+    );
+  });
+
+  it('SpaceAfterComma', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SpaceAfterComma': { enabled: true }
+        }
+      }).rules,
+      { 'space-after-comma': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SpaceAfterComma': { enabled: true, style: 'one_space' }
+        }
+      }).rules,
+      { 'space-after-comma': [1, { include: true }] }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SpaceAfterComma': { enabled: true, style: 'no_space' }
+        }
+      }).rules,
+      { 'space-after-comma': [1, { include: false }] }
+    );
+  });
+
+  it('SpaceAfterPropertyColon', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SpaceAfterPropertyColon': { enabled: true }
+        }
+      }).rules,
+      { 'space-after-colon': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SpaceAfterPropertyColon': { enabled: true, style: 'one_space' }
+        }
+      }).rules,
+      { 'space-after-colon': [1, { include: true }] }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SpaceAfterPropertyColon': { enabled: true, style: 'no_space' }
+        }
+      }).rules,
+      { 'space-after-colon': [1, { include: false }] }
     );
   });
 
@@ -1051,6 +1399,41 @@ describe('Rule Conversion', function () {
       }).rules,
       { 'space-before-colon': 1 }
     );
+  });
+
+  it('SpaceBeforeBrace', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SpaceBeforeBrace': { enabled: true }
+        }
+      }).rules,
+      { 'space-before-brace': 1 }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'SpaceBeforeBrace': { enabled: true, style: 'space' }
+        }
+      }).rules,
+      { 'space-before-brace': [1, { include: true }] }
+    );
+
+    var convertWarnings = scss2sass.convert(
+        {
+          linters: {
+            'SpaceBeforeBrace': { enabled: true, style: 'new_line' }
+          }
+        },
+        {
+          debug: true
+        }
+      ).warnings;
+
+    assert.equal(convertWarnings.length, 1);
+    assert.notEqual(convertWarnings[0].indexOf('style'), -1);
+    assert.notEqual(convertWarnings[0].indexOf('new_line'), -1);
   });
 
   it('SpaceBetweenParens', function () {

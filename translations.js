@@ -150,17 +150,14 @@ module.exports.NameFormat = {
         generalSettings = {},
         types = ['function', 'mixin', 'placeholder', 'variable'],
         translateConvention = function (_convention) {
-          if (_convention === 'hyphenated_lowercase') {
+          switch (_convention) {
+          case 'hyphenated_lowercase':
             return 'hyphenatedlowercase';
-          }
-          else if (_convention === 'snake_case') {
+          case 'snake_case':
             return 'snakecase';
-          }
-          else if (_convention === 'camel_case') {
+          case 'camel_case':
             return 'camelcase';
-          }
-          else {
-            // default assumes a regexp
+          default:
             return _convention;
           }
         };
@@ -243,6 +240,66 @@ module.exports.QualifyingElement = {
   }
 };
 
+module.exports.SelectorFormat = {
+  special_case: function (linterValue, sassSettings, severity) {
+    var i, name, specificSettings,
+        generalSettings = {},
+        types = ['attribute', 'class', 'element', 'placeholder'],
+        translateConvention = function (_convention) {
+          switch (_convention) {
+          case 'hyphenated_lowercase':
+            return 'hyphenatedlowercase';
+          case 'snake_case':
+            return 'snakecase';
+          case 'camel_case':
+            return 'camelcase';
+          case 'strict_BEM':
+            return 'strictbem';
+          case 'hyphenated_BEM':
+            return 'hyphenatedbem';
+          default:
+            return _convention;
+          }
+        };
+
+    if (linterValue.hasOwnProperty('allow_leading_underscore')) {
+      generalSettings['allow-leading-underscore'] = linterValue.allow_leading_underscore;
+    }
+
+    if (linterValue.hasOwnProperty('convention')) {
+      generalSettings.convention = translateConvention(linterValue.convention);
+    }
+
+    if (linterValue.hasOwnProperty('convention_explanation')) {
+      generalSettings['convention-explanation'] = linterValue.convention_explanation;
+    }
+
+    if (linterValue.hasOwnProperty('ignored_names')) {
+      generalSettings.ignore = linterValue.ignored_names;
+    }
+
+    for (i = 0; i < types.length; i++) {
+      name = types[i];
+      specificSettings = cloneDeep(generalSettings);
+
+      if (linterValue[name + '_convention']) {
+        specificSettings.convention = translateConvention(linterValue[name + '_convention']);
+      }
+
+      if (linterValue[name + '_convention_explanation']) {
+        specificSettings['convention-explanation'] = linterValue[name + '_convention_explanation'];
+      }
+
+      if (Object.keys(specificSettings).length > 0) {
+        sassSettings.rules[name + '-name-format'] = [severity, specificSettings];
+      }
+      else {
+        sassSettings.rules[name + '-name-format'] = severity;
+      }
+    }
+  }
+};
+
 module.exports.Shorthand = {
   name: 'shorthand-values',
   options: {
@@ -252,6 +309,7 @@ module.exports.Shorthand = {
   }
 };
 
+// TODO: This rule should either be a special case or a new rule is needed
 module.exports.SingleLinePerProperty = {
   name: 'brace-style',
   options: {
