@@ -1,6 +1,6 @@
 {
   "name": "make-sass-lint-config",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Convert your .scss-lint.yml config file into the equivalent .sass-lint.yml",
   "main": "index.js",
   "bin": {
