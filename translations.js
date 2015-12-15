@@ -22,16 +22,6 @@ module.exports.BangFormat = {
   }
 };
 
-module.exports.BemDepth = {
-  name: 'bem-depth',
-  options: {
-    max_elements: {
-      name: 'max-depth'
-    }
-  },
-  defaultDisabled: true
-};
-
 module.exports.BorderZero = {
   name: 'border-zero',
   options: {
@@ -427,10 +417,6 @@ module.exports.TrailingSemicolon = { name: 'trailing-semicolon' };
 
 module.exports.TrailingZero = { name: 'no-trailing-zero', defaultDisabled: true };
 module.exports.TransitionAll = { name: 'no-transition-all', defaultDisabled: true };
-
-// missing: UnnecessaryMantissa
-// missing: UnnecessaryParentReference
-
 module.exports.UrlFormat = { name: 'no-url-protocols' };
 module.exports.UrlQuotes = { name: 'url-quotes' };
 

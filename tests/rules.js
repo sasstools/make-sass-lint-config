@@ -257,30 +257,6 @@ describe('Rule Conversion', function () {
     );
   });
 
-  it('BemDepth', function () {
-    assert.deepStrictEqual(
-      scss2sass.convert({
-        linters: {
-          'BemDepth': { enabled: true }
-        }
-      }).rules,
-      {
-        'bem-depth': 1
-      }
-    );
-
-    assert.deepStrictEqual(
-      scss2sass.convert({
-        linters: {
-          'BemDepth': { enabled: true, max_elements: 4 }
-        }
-      }).rules,
-      {
-        'bem-depth': [1, { 'max-depth': 4 }]
-      }
-    );
-  });
-
   it('BorderZero', function () {
     assert.deepStrictEqual(
       scss2sass.convert({
