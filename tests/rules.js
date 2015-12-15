@@ -257,6 +257,30 @@ describe('Rule Conversion', function () {
     );
   });
 
+  it('BemDepth', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'BemDepth': { enabled: true }
+        }
+      }).rules,
+      {
+        'bem-depth': 1
+      }
+    );
+
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'BemDepth': { enabled: true, max_elements: 3 }
+        }
+      }).rules,
+      {
+        'bem-depth': [1, { 'max-depth': 3 }]
+      }
+    );
+  });
+
   it('BorderZero', function () {
     assert.deepStrictEqual(
       scss2sass.convert({
@@ -1623,6 +1647,17 @@ describe('Rule Conversion', function () {
         }
       }).rules,
       { 'no-transition-all': 1 }
+    );
+  });
+
+  it('UnnecessaryMantissa', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({
+        linters: {
+          'UnnecessaryMantissa': { enabled: true }
+        }
+      }).rules,
+      { 'no-trailing-zero': 1 }
     );
   });
 
