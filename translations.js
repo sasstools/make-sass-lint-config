@@ -428,6 +428,9 @@ module.exports.TrailingSemicolon = { name: 'trailing-semicolon' };
 module.exports.TrailingZero = { name: 'no-trailing-zero', defaultDisabled: true };
 module.exports.TransitionAll = { name: 'no-transition-all', defaultDisabled: true };
 module.exports.UnnecessaryMantissa = { name: 'no-trailing-zero' };
+
+// missing: UnnecessaryParentReference
+
 module.exports.UrlFormat = { name: 'no-url-protocols' };
 module.exports.UrlQuotes = { name: 'url-quotes' };
 
