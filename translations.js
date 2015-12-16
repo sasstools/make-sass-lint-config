@@ -275,7 +275,7 @@ module.exports.SelectorFormat = {
   special_case: function (linterValue, sassSettings, severity) {
     var i, name, specificSettings,
         generalSettings = {},
-        types = ['attribute', 'class', 'element', 'id', 'placeholder'],
+        types = ['class', 'id', 'placeholder'], // Missing: attribute, element
         translateConvention = function (_convention) {
           switch (_convention) {
           case 'hyphenated_lowercase':
