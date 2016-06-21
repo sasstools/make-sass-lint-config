@@ -41,7 +41,7 @@ module.exports.BorderZero = {
   }
 };
 
-module.exports.ColorKeyword = { name: 'no-color-keyword' };
+module.exports.ColorKeyword = { name: 'no-color-keywords' };
 module.exports.ColorVariable = { name: 'no-color-literals' };
 module.exports.Comment = { name: 'no-css-comments' };
 module.exports.DebugStatement = { name: 'no-debug' };
