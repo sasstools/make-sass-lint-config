@@ -323,7 +323,7 @@ describe('Rule Conversion', function () {
           'ColorKeyword': { enabled: true }
         }
       }).rules,
-      { 'no-color-keyword': 1 }
+      { 'no-color-keywords': 1 }
     );
   });
 
