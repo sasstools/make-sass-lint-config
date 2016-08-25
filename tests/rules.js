@@ -300,7 +300,7 @@ describe('Rule Conversion', function () {
         }
       }).rules,
       {
-        'border-zero': [1, { convention: 'zero' }]
+        'border-zero': [1, { convention: '0' }]
       }
     );
 
