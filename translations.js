@@ -33,10 +33,18 @@ module.exports.BemDepth = {
 };
 
 module.exports.BorderZero = {
-  name: 'border-zero',
-  options: {
-    convention: {
-      name: 'convention'
+  special_case: function (linterValue, sassSettings, severity) {
+    if (linterValue.hasOwnProperty('convention')) {
+      var convention = linterValue.convention;
+      if (convention === 'zero') {
+        sassSettings.rules['border-zero'] = [severity, { convention: '0' }];
+      }
+      else {
+        sassSettings.rules['border-zero'] = [severity, { convention: convention }];
+      }
+    }
+    else {
+      sassSettings.rules['border-zero'] = severity;
     }
   }
 };
