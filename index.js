@@ -79,6 +79,10 @@ var convert = function (scssSettings, options) {
     sassSettings.files.include = scssSettings.scss_files;
   }
 
+  if (scssSettings.exclude) {
+    sassSettings.files.ignore = scssSettings.exclude;
+  }
+
   if (!scssSettings.linters) {
     scssSettings.linters = {};
   }

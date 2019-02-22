@@ -21,6 +21,16 @@ describe('Overall Conversion', function () {
     );
   });
 
+  it('exclude specified', function () {
+    assert.deepStrictEqual(
+      scss2sass.convert({ exclude: 'foo/bar.scss' }).files,
+      {
+        ignore: 'foo/bar.scss',
+        include: '**/*.s+(a|c)ss'
+      }
+    );
+  });
+
   it('unsupported linter', function () {
     assert.deepEqual(
       scss2sass.convert({ linters: { 'UnsupportedLinter': { enabled: true } } }, { debug: true }).unsupported,
